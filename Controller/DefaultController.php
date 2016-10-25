@@ -24,11 +24,11 @@ class DefaultController extends Controller
      */
     public function homeAction($numero, $nom, Request $request)
     {
-	$response = new Response();
-	$response->setContent(json_encode(array(
-		'data' => 'mes supers datas en json qui sont trop longues',
-	)));
-	$response->headers->set('Content-type', 'application/json');
-	return $response;
+    	$response = new Response();
+    	$response->setContent(json_encode(array(
+    		'data' => 'mes supers datas en json qui sont trop longues',
+    	)));
+    	$response->headers->set('Content-type', 'application/json');
+    	return $response;
     }
 }

@@ -153,11 +153,10 @@ class JoueurController extends Controller
 	$player->setNom($nom);
 	$player->setPrenom($prenom);
 	$player->setEmail($email);
-
 	$em = $this->getDoctrine()->getManager();
 	$em->persist($player);
 	$em->flush();
-
+	
 	return new Response('ok');
-    }
+    } 
 }

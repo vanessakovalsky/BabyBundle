@@ -26,7 +26,7 @@ class CreateJoueurCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
       //Affiche un simple message;
-      $output->writeln('Message dans la console');
+      $output->writeln('<bg=red>Message dans la console</>');
       //Message sur plusieurs lignes
       $output->writeln(array('Création d un joueur','Deuxième ligne de la création'));
 
