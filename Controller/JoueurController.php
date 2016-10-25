@@ -27,11 +27,13 @@ class JoueurController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $joueurs = $em->getRepository('BabyBundle:Joueur')->findAll();
-
-        return $this->render('joueur/index.html.twig', array(
+        foreach ($joueurs as $joueur){
+          $joueur_equipe[$joueur->getid()] = $em->getRepository('BabyBundle:Joueur')->findTeamName($joueur);
+        }
+        return $this->render('BabyBundle:Joueur:index.html.twig', array(
             'joueurs' => $joueurs,
+            'joueurs_equipe_name' => $joueur_equipe
         ));
     }
 
@@ -156,7 +158,7 @@ class JoueurController extends Controller
 	$em = $this->getDoctrine()->getManager();
 	$em->persist($player);
 	$em->flush();
-	
+
 	return new Response('ok');
-    } 
+    }
 }

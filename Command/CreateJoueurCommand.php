@@ -54,7 +54,7 @@ class CreateJoueurCommand extends ContainerAwareCommand
       //Accès au services du container
       $joueurManager = $this->getContainer()->get('baby.logger');
       $joueurManager->writeLog('Le joueur'.$input->getArgument('username'). 'a bien été créé');
-
+      
       $output->writeln('Le joueur '.$input->getArgument('username'). ' a bien été créé');
 
     }

@@ -17,8 +17,12 @@ class TeamRepository extends \Doctrine\ORM\EntityRepository
 		$query = $this->_em
 				->createQuery('SELECT t FROM BabyBundle:Team t WHERE t.id = :team_id');
 		$query->setParameter('team_id', $team_id);
-		$results = $query->getResult();	
+		$results = $query->getResult();
 		return $results;
+		// $query_bis = $this->createQueryBuilder('team');
+		// $query_bis->select('team.id', 'team.name')
+		// 	->where('team.id=:id');
+		// $query_bis->setParameter('team_id', $team_id);
 	}
 
 	public function getPlayersByTeam($id_team)
@@ -32,5 +36,17 @@ class TeamRepository extends \Doctrine\ORM\EntityRepository
 		$result = $query->getQuery()
 				->getResult();
 		return $result;
-	} 
+	}
+
+	public function findTeamByPlayer($joueur_id){
+		$query = $this->createQueryBuilder('team');
+		$query->select('team.id')
+			->leftJoin('team.players', 'tp')
+			->addSelect('tp.nom')
+			->where('tp.id = :joueur_id');
+		$query->setParameter('joueur_id', $joueur_id);
+		$result = $query->getQuery()
+			->getResult();
+		return $result;
+	}
 }

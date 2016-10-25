@@ -1,6 +1,7 @@
 <?php
 
 namespace BabyBundle\Repository;
+use Doctrine\ORM\Query\Expr\Orx;
 
 /**
  * JoueurRepository
@@ -10,4 +11,16 @@ namespace BabyBundle\Repository;
  */
 class JoueurRepository extends \Doctrine\ORM\EntityRepository
 {
+  public function findTeamName($joueur){
+    $teams = $this->_em->getRepository('BabyBundle:Team')->findTeamByPlayer($joueur->getId());
+    foreach($teams as $team){
+      $team_id[] = $team['id'];
+    }
+    if(!empty($team_id)){
+       $query = $this->_em->createQuery('SELECT team.name FROM BabyBundle:Team team WHERE team.id IN (:team_id)');
+       $query->setParameter('team_id', $team_id);
+       $resultats = $query->getResult();
+      return $resultats;
+    }
+  }
 }
