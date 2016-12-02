@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 
 class DefaultController extends Controller
 {
@@ -15,30 +16,45 @@ class DefaultController extends Controller
     public function indexAction()
     {
 
-
       $custom_logger = $this->get('baby.logger');
       $custom_logger->writeLog('Affiche la page d\'accueil');
 
       $response = $this->render('BabyBundle:Default:index.html.twig');
-          // cache for 3600 seconds
-       $response->setSharedMaxAge(3600);
-
-       // (optional) set a custom Cache-Control directive
-       $response->headers->addCacheControlDirective('must-revalidate', true);
+      // Set cache settings in one call
+      $response->setCache(array(
+          'etag'          => 'index',
+          //'last_modified' => date(),
+          'max_age'       => 10,
+          's_maxage'      => 10,
+          'public'        => true,
+          // 'private'    => true,
+      ));
 
        return $response;
     }
 
     /**
-     * @Route("/homepage/{numero}/{nom}")
+     * @Route("/homepage")
      */
-    public function homeAction($numero, $nom, Request $request)
+    public function homeAction()
     {
-	$response = new Response();
-	$response->setContent(json_encode(array(
-		'data' => 'mes supers datas en json qui sont trop longues',
-	)));
-	$response->headers->set('Content-type', 'application/json');
-	return $response;
+      //$user = $this->get('security.token_storage')->getToken()->getUser();
+      //if(isset($user)){
+        //$this->denyAccessUnlessGranted('ROLE_USER', null, 'Pas de role admin');
+      //}
+    	$response = new Response();
+    	$response->setContent(json_encode(array(
+    		'data' => 'phrase fkhdqkghqkjfgqh',
+    	)));
+    	$response->headers->set('Content-type', 'application/json');
+      $response->setCache(array(
+          'etag'          => 'index',
+          //'last_modified' => date(),
+          'max_age'       => 3600,
+          's_maxage'      => 10,
+          'public'        => true,
+          // 'private'    => true,
+      ));
+    	return $response;
     }
 }

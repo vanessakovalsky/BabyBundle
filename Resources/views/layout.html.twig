@@ -1,10 +1,30 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
-<link rel="stylesheet' href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ asset('bundles/baby/css/main.css') }}" type="text/css" rel="stylesheet" />
 {% endblock %}
 {% block body %}
-Mon contenu de bundle 
+{% block header %}
+<navbar class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+    <a class="navbar-brand" href="{{ url('homepage') }}baby">Formation Symfony</a>
+    </div>
+    <div id="navbar">
+      <ul class="nav navbar-nav">
+        <li><a href="game">Parties</a></li>
+      </ul>
+    </div>
+  </div>
+</navbar>
+{% endblock %}
+<div class="container">
+Mon contenu de bundle
+</div>
 {% endblock %}
 {% block footer %}
-Mon footer de bundle 
+Mon footer de bundle
 {% endblock %}

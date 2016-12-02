@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use BabyBundle\Entity\Game;
 use BabyBundle\Form\GameType;
+use BabyBundle\Event\BabyExportSendMail;
 
 /**
  * Game controller.
@@ -28,7 +29,16 @@ class GameController extends Controller
 
         $games = $em->getRepository('BabyBundle:Game')->findAll();
 
-        return $this->render('game/index.html.twig', array(
+        //Appel service export CSVExportManager
+        $export_manager = $this->get('baby.exportcsv');
+        $data = array(
+          '1' => array('dupont', 'jean'),
+          '2' => array('madame', 'vincent'),
+        );
+        $event_export = new BabyExportSendMail();
+        $this->get('event_dispatcher')->dispatch(BabyExportSendMail::BABYEXPORTSENDMAIL, $event_export);
+        //return $export_manager->exportCSV($data, 'csv');
+        return $this->render('BabyBundle:Game:index.html.twig', array(
             'games' => $games,
         ));
     }
@@ -53,7 +63,7 @@ class GameController extends Controller
             return $this->redirectToRoute('game_show', array('id' => $game->getId()));
         }
 
-        return $this->render('game/new.html.twig', array(
+        return $this->render('BabyBundle:game:new.html.twig', array(
             'game' => $game,
             'form' => $form->createView(),
         ));

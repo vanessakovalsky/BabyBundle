@@ -1,9 +1,9 @@
 services:
-    baby.logger_factory:
-        class: BabyBundle\Service\LogManagerFactory
+    #baby.logger_factory:
+        #class: BabyBundle\Service\LogManagerFactory
     baby.logger:
         class: BabyBundle\Service\LogManager
-        factory: ["@baby.logger_factory", createLogManager]
+        #factory: ["@baby.logger_factory", createLogManager]
         arguments: ["@request_stack"]
     baby.listener:
         class: BabyBundle\EventListener\BabyListener
@@ -12,5 +12,12 @@ services:
             - { name: kernel.event_listener, event: baby.newplayer, method: logNewPlayer }
     baby.subscriber:
         class: BabyBundle\EventListener\BabySubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+    baby.exportcsv:
+        class: BabyBundle\Service\CSVExportManager
+    baby.export.event.subscriber:
+        class: BabyBundle\EventListener\BabyExportSubscriber
+        arguments: ["@mailer","@templating"]
         tags:
             - { name: kernel.event_subscriber }

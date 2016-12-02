@@ -28,6 +28,7 @@ class JoueurController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $joueurs = $em->getRepository('BabyBundle:Joueur')->findAll();
+        $joueur_equipe = array();
         foreach ($joueurs as $joueur){
           $joueur_equipe[$joueur->getid()] = $em->getRepository('BabyBundle:Joueur')->findTeamName($joueur);
         }
@@ -46,13 +47,15 @@ class JoueurController extends Controller
     public function newAction(Request $request)
     {
       $event = new BabyAddPlayerEvent();
-        $eventDispatcher = $this->get('event_dispatcher');
-        $eventDispatcher->dispatch(BabyAddPlayerEvent::NEWPLAYER, $event);
+        // $eventDispatcher = $this->get('event_dispatcher');
+        // $eventDispatcher->dispatch(BabyAddPlayerEvent::NEWPLAYER, $event);
         $joueur = new Joueur();
         $form = $this->createForm('BabyBundle\Form\JoueurType', $joueur);
         $form->handleRequest($request);
+        var_dump($form->isSubmitted());
 
         if ($form->isSubmitted() && $form->isValid()) {
+          var_dump('formulaire soumis');
             $em = $this->getDoctrine()->getManager();
             $em->persist($joueur);
             $em->flush();
@@ -60,10 +63,12 @@ class JoueurController extends Controller
             return $this->redirectToRoute('joueur_show', array('id' => $joueur->getId()));
         }
 
-        return $this->render('joueur/new.html.twig', array(
+        $response = $this->render('BabyBundle:Joueur:new.html.twig', array(
             'joueur' => $joueur,
             'form' => $form->createView(),
         ));
+        //$response->headers->set('Method', 'PURGE');
+        return $response;
     }
 
     /**
@@ -151,14 +156,13 @@ class JoueurController extends Controller
      */
     public function AddPlayerAction($nom, $prenom, $email, Request $request)
     {
-	$player = new Joueur();
-	$player->setNom($nom);
-	$player->setPrenom($prenom);
-	$player->setEmail($email);
-	$em = $this->getDoctrine()->getManager();
-	$em->persist($player);
-	$em->flush();
-
-	return new Response('ok');
+    	$player = new Joueur();
+    	$player->setNom($nom);
+    	$player->setPrenom($prenom);
+    	$player->setEmail($email);
+    	$em = $this->getDoctrine()->getManager();
+    	$em->persist($player);
+    	$em->flush();
+    	return new Response('ok');
     }
 }

@@ -5,6 +5,9 @@ namespace BabyBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class GameType extends AbstractType
 {
@@ -19,9 +22,10 @@ class GameType extends AbstractType
             ->add('heure')
 	    ->add('teams')
 	    ->add('tournament')
+      ->add('save', SubmitType::class, array('label' => 'Enregistrer la partie'))
         ;
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */
