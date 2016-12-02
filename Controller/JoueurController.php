@@ -47,20 +47,18 @@ class JoueurController extends Controller
     public function newAction(Request $request)
     {
       $event = new BabyAddPlayerEvent();
-        // $eventDispatcher = $this->get('event_dispatcher');
-        // $eventDispatcher->dispatch(BabyAddPlayerEvent::NEWPLAYER, $event);
+         $eventDispatcher = $this->get('event_dispatcher');
+         $eventDispatcher->dispatch(BabyAddPlayerEvent::NEWPLAYER, $event);
         $joueur = new Joueur();
         $form = $this->createForm('BabyBundle\Form\JoueurType', $joueur);
         $form->handleRequest($request);
-        var_dump($form->isSubmitted());
 
         if ($form->isSubmitted() && $form->isValid()) {
-          var_dump('formulaire soumis');
             $em = $this->getDoctrine()->getManager();
             $em->persist($joueur);
             $em->flush();
 
-            return $this->redirectToRoute('joueur_show', array('id' => $joueur->getId()));
+            return $this->redirectToRoute('joueur_index'));
         }
 
         $response = $this->render('BabyBundle:Joueur:new.html.twig', array(
