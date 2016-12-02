@@ -58,7 +58,7 @@ class JoueurController extends Controller
             $em->persist($joueur);
             $em->flush();
 
-            return $this->redirectToRoute('joueur_index'));
+            return $this->redirectToRoute('joueur_index');
         }
 
         $response = $this->render('BabyBundle:Joueur:new.html.twig', array(
