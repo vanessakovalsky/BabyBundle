@@ -12,7 +12,7 @@ use BabyBundle\Entity\Joueur;
  */
 class TeamRepository extends \Doctrine\ORM\EntityRepository
 {
-	public function getPlayerByTeam($team_id)
+	public function findTeam($team_id)
 	{
 		$query = $this->_em
 				->createQuery('SELECT t FROM BabyBundle:Team t WHERE t.id = :team_id');

@@ -4,6 +4,15 @@
 {{ parent() }}
 {% endblock %}
 <div class="container">
-Liste des joueurs
+<h1>Liste des équipes</h1>
+{% for team in teams %}
+{{ team.name }}
+{{ team.color }}
+{% endfor %}
+{% for team in joueurs %}
+  {% for joueur in team %}
+    {{ joueur.nom}}
+  {% endfor %}
+{% endfor %}
 </div>
 {% endblock %}

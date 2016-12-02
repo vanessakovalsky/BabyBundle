@@ -53,7 +53,7 @@ class TournoiController extends Controller
             return $this->redirectToRoute('tournoi_show', array('id' => $tournoi->getId()));
         }
 
-        return $this->render('tournoi/new.html.twig', array(
+        return $this->render('BabyBundle:Tournoi:new.html.twig', array(
             'tournoi' => $tournoi,
             'form' => $form->createView(),
         ));

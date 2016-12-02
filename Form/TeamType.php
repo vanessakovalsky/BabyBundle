@@ -5,6 +5,9 @@ namespace BabyBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class TeamType extends AbstractType
 {
@@ -18,9 +21,10 @@ class TeamType extends AbstractType
             ->add('name')
             ->add('color')
             ->add('players')
+            ->add('save', SubmitType::class, array('label' => 'Enregistrer l\'équipe'))
         ;
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */

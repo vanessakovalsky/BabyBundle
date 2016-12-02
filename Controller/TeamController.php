@@ -27,14 +27,19 @@ class TeamController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $teams = $em->getRepository('BabyBundle:Team')->findAll();
+        $joueur_equipe = array();
+
 	if(is_array($teams))
 	{
 		foreach ($teams as $team)
-		{	
-			$joueur_equipe[$team->getId()] = $em->getRepository('BabyBundle:Team')->getPlayerByTeam($team->getId());
-		}
+		{
+			$joueur_equipe[$team->getId()] = $em->getRepository('BabyBundle:Team')->getPlayersByTeam($team->getId());
+    }
 	}
-        return $this->render('team/index.html.twig', array(
+  else{
+    $joueur_equipe[$teams->getId()] = $em->getRepository('BabyBundle:Team')->getPlayersByTeam($teams->getId());
+  }
+        return $this->render('BabyBundle:Team:index.html.twig', array(
             'teams' => $teams,
 	    'joueurs' => $joueur_equipe,
         ));
@@ -52,8 +57,6 @@ class TeamController extends Controller
         $form = $this->createForm('BabyBundle\Form\TeamType', $team);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-        die(var_dump($request->server->get('REQUEST_METHOD')));
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($team);
             $em->flush();
@@ -61,7 +64,7 @@ class TeamController extends Controller
             return $this->redirectToRoute('team_show', array('id' => $team->getId()));
         }
 
-        return $this->render('team/new.html.twig', array(
+        return $this->render('BabyBundle:Team:new.html.twig', array(
             'team' => $team,
             'form' => $form->createView(),
         ));
