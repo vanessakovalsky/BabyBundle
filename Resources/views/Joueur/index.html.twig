@@ -5,6 +5,12 @@
 {% endblock %}
 <div class="container">
 Liste des joueurs
-{{dump(joueurs)}}
+<table>
+{% for joueur in joueurs %}
+<tr><td>{{ joueur.nom }}</td>
+<td>{{ joueur.prenom }}</td>
+</tr>
+{% endfor %}
+</table>
 </div>
 {% endblock %}
